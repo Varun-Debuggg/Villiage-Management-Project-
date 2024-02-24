@@ -1,0 +1,51 @@
+int a = Convert.ToInt32(TextBox2.Text);
+        float b = a / 1000;
+        TextBox3.Text = b.ToString();
+
+        SqlCommand cmd = new SqlCommand("select * from TBL_BOOK where Item='" + TextBox1.Text + "' ", con);
+        cmd.CommandType = CommandType.Text;
+        adpt.SelectCommand = cmd;
+        DataTable dt = new DataTable();
+        try
+        {
+            adpt.Fill(dt);
+
+            if (dt.Rows.Count > 0)
+            {
+                
+                TextBox4.Text = dt.Rows[0][3].ToString();
+                TextBox5.Text =dt.Rows[0][1].ToString();
+                TextBox6.Text= dt.Rows[0][2].ToString();
+                int y = Convert.ToInt32(TextBox5.Text);
+
+                int x = Convert.ToInt32(TextBox2.Text);
+                int z = x + y;
+                TextBox7.Text = z.ToString();
+                int d = Convert.ToInt32(TextBox6.Text);
+                float c = b + d;
+                TextBox8.Text = c.ToString();
+
+                SqlCommand cmd1 = new SqlCommand("update TBL_BOOK set Quality='" + TextBox7.Text + "',Measurement='" + TextBox8.Text + "'where Item='" + TextBox1.Text + "' ", con);
+                cmd1.CommandType = CommandType.Text;
+                adpt.SelectCommand = cmd1;
+                DataTable dt1 = new DataTable();
+                try
+                {
+                    adpt.Fill(dt1);
+                    msgbox("Update successfully");
+
+                }
+                catch (Exception ee)
+                {
+                    msgbox(ee.Message);
+                }
+
+
+            }
+            else
+            {
+}
+        catch (Exception ee)
+        {
+            msgbox(ee.Message);
+        }

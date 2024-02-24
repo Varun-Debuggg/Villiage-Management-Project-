@@ -1,0 +1,78 @@
+
+                int g = Convert.ToInt32(d1.Rows[0][1].ToString());
+                int m = Convert.ToInt32(d1.Rows[0][2].ToString());
+                int h = Convert.ToInt32(TextBox1.Text);
+                int n = Convert.ToInt32(TextBox3.Text);
+                int j = h + g;
+                TextBox8.Text = j.ToString();
+                int o = m + n;
+                TextBox9.Text = o.ToString();
+                SqlCommand cmd2 = new SqlCommand("update TBL_UP set Litre='" + TextBox8.Text + "', Amount='" + TextBox9.Text + "' where Id='" + TextBox4.Text + "' ", con);
+                cmd2.CommandType = CommandType.Text;
+                adpt.SelectCommand = cmd2;
+                DataTable dt = new DataTable();
+                try
+                {
+                    adpt.Fill(dt);
+                    msgbox("Update successfully");
+                    SqlCommand cmd4 = new SqlCommand("select * from TBL_BOOK where OrderId='" + TextBox4.Text + "' ", con);
+                    cmd4.CommandType = CommandType.Text;
+                    adpt.SelectCommand = cmd4;
+                    DataTable d14 = new DataTable();
+                    try
+                    {
+                        adpt.Fill(d14);
+                        if (d14.Rows.Count > 0)
+                        {
+                            TextBox10.Text = d14.Rows[0][0].ToString();
+                            SqlCommand cmd5 = new SqlCommand("select * from TBL_STOCK where Item='" + TextBox10.Text + "' ", con);
+                            cmd5.CommandType = CommandType.Text;
+                            adpt.SelectCommand = cmd5;
+                            DataTable d16 = new DataTable();
+                            try
+                            {
+                                adpt.Fill(d16);
+                                if (d16.Rows.Count > 0)
+                                {
+                                    TextBox11.Text = d16.Rows[0][1].ToString();
+                                    int f = Convert.ToInt32(TextBox11.Text);
+                                    int g1 = Convert.ToInt32(TextBox2.Text);
+                                    int h1 = g1 + f;
+                                    TextBox12.Text = h1.ToString();
+                                    SqlCommand cmd0 = new SqlCommand("update TBL_STOCK set Item='" + TextBox10.Text + "', Measurement='" + TextBox12.Text + "'where Item='" + TextBox10.Text + "' ", con);
+                                    cmd0.CommandType = CommandType.Text;
+                                    adpt.SelectCommand = cmd0;
+                                    DataTable dt1 = new DataTable();
+                                    adpt.Fill(dt1);
+                                    msgbox("Update successfully");
+                                    msgbox("Inserted successfully");
+                                }
+                                else
+                                {
+                                    SqlCommand cmd12 = new SqlCommand("insert into TBL_STOCK values ( '" + TextBox10.Text + "','" + TextBox2.Text + "')", con);
+                                    cmd12.CommandType = CommandType.Text;
+                                    adpt.SelectCommand = cmd12;
+                                    DataTable dt12 = new DataTable();
+
+                                    adpt.Fill(dt12);
+                                    msgbox("inserted");
+                                }
+
+                            }
+                            catch (Exception ee)
+                            {
+                                msgbox(ee.Message);
+                            }
+                        }
+                    }
+                    catch (Exception ee)
+                    {
+                        msgbox(ee.Message);
+                    }
+                }
+
+
+                catch (Exception ee)
+                {
+                    msgbox(ee.Message);
+                }
